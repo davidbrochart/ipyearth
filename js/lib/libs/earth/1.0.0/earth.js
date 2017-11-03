@@ -43,86 +43,7 @@ module.exports['map'] = function(element) {
     style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } #details { position: absolute; bottom: 3%; left: 2%; pointer-events: none;  /* This div is just a container--do not let it interfere with operation of the map. */ } #earth { background-color: rgba(0, 0, 5, 0.6); border-radius: 0.5rem/0.5rem; display: table; margin-top: 1rem; padding: 0 1rem 0 1rem; pointer-events: all; } #menu { background-color: rgba(5, 10, 30, 0.85); border-radius: 0.5rem/0.5rem; overflow: hidden; pointer-events: all; margin-top: 1rem; padding: 0.5rem 1rem 0.5rem 1rem; opacity: 1; max-height: 34rem; transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; -webkit-transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; } #menu.invisible { margin-top: 0; padding: 0 1rem 0 1rem; opacity: 0; max-height: 0; transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; -webkit-transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; } #progress { padding-left: 1rem; } #nav-now { padding-right: 1rem; } #nav-backward, #nav-backward-more, #nav-forward, #nav-forward-more, #option-show-grid { padding-left: 1rem; padding-right: 1rem; } #show-location { padding-left: 0.25rem; padding-right: 0.25rem; } #lang { font-size: 1.25rem; float: right; padding-top: 0.5rem; } .social-icon { font-size: 2.25rem; font-family: monosocialiconsfont-sub,sans-serif; padding-left: 0.25rem; text-decoration: none; position: relative; top: 0.1rem; } .internal-link { text-decoration: none; } .coastline, .lakes { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .coastline, .firefox .lakes { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
     element.appendChild(style);
 
-    //var div = document.createElement('div');
-    //div.setAttribute('id', 'display');
-    //div.style.cursor = 'default';
-    //element.appendChild(div);
-
-    //var div = document.createElement('div');
-    //div.setAttribute('id', 'details');
-    //div.style.cursor = 'default';
-    //var para = document.createElement("p");
-    //para.setAttribute('id', 'status');
-    //div.appendChild(para);
-    //element.appendChild(div);
-
-    //var svg_map = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    //svg_map.setAttribute('id', 'map');
-    //svg_map.setAttribute('class', 'fill-screen');
-    //svg_map.setAttribute('style', 'position: absolute');
-    //svg_map.setAttribute('style', 'top: 0');
-    //svg_map.setAttribute('style', 'left: 0');
-    //svg_map.setAttribute('style', 'will-change: transform');
-    //svg_map.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-    //var svg_foreground = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    //svg_foreground.setAttribute('id', 'foreground');
-    //svg_foreground.setAttribute('class', 'fill-screen');
-    //svg_foreground.setAttribute('style', 'position: absolute');
-    //svg_foreground.setAttribute('style', 'top: 0');
-    //svg_foreground.setAttribute('style', 'left: 0');
-    //svg_foreground.setAttribute('style', 'will-change: transform');
-    //svg_foreground.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-
-    //var canvas_animation = document.createElement('canvas');
-    //canvas_animation.setAttribute('id', 'animation');
-    //canvas_animation.setAttribute('class', 'fill-screen');
-    //canvas_animation.setAttribute('style', 'position: absolute');
-    //canvas_animation.setAttribute('style', 'top: 0');
-    //canvas_animation.setAttribute('style', 'left: 0');
-    //canvas_animation.setAttribute('style', 'will-change: transform');
-
-    //var canvas_overlay = document.createElement('canvas');
-    //canvas_overlay.setAttribute('id', 'overlay');
-    //canvas_overlay.setAttribute('class', 'fill-screen');
-    //canvas_overlay.setAttribute('style', 'position: absolute');
-    //canvas_overlay.setAttribute('style', 'top: 0');
-    //canvas_overlay.setAttribute('style', 'left: 0');
-    //canvas_overlay.setAttribute('style', 'will-change: transform');
-
-    //var e = document.getElementById("display");
-    //e.appendChild(svg_map);
-    //e.appendChild(canvas_animation);
-    //e.appendChild(canvas_overlay);
-    //e.appendChild(svg_foreground);
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.coastline, .lakes { stroke: #ffffff; stroke-width: 1.25; fill: none; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.firefox .coastline, .firefox .lakes { stroke-width: 1.0; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.graticule { stroke: #505050; stroke-width: 1.0; fill: none; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.background-sphere { stroke: none; fill: #303030; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; }';
-
-    //var style = document.createElement('style');
-    //style.type = 'text/css';
-    //style.innerHTML = '.location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }';
+    element.style.backgroundColor = 'black'; 
 
     var _ = require("../../underscore.js/1.6.0/underscore.js");
     var Backbone = require("../../backbone.js/1.1.0/backbone.js");
@@ -363,7 +284,6 @@ module.exports['map'] = function(element) {
      * @returns {Object} a promise for a globe object.
      */
     function buildGlobe(projectionName) {
-        console.log(projectionName);
         var builder = globes.get(projectionName);
         if (!builder) {
             return when.reject("Unknown projection: " + projectionName);
@@ -1248,5 +1168,8 @@ module.exports['map'] = function(element) {
         configuration.fetch();
     }
 
+    console.log(configuration);
     when(true).then(init).then(start).otherwise(report.error);
+
+    return {'configuration': configuration};
 };

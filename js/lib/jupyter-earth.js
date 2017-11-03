@@ -27,8 +27,8 @@ var EarthModel = widgets.DOMWidgetModel.extend({
         _view_module : 'ipyearth',
         _model_module_version : '0.1.0',
         _view_module_version : '0.1.0',
-        width : "600px",
-        height : "400px",
+        width : "100%",
+        height : "600px",
     })
 });
 
@@ -38,17 +38,21 @@ var EarthView = widgets.DOMWidgetView.extend({
     render: function() {
         this.el.style['width'] = this.model.get('width');
         this.el.style['height'] = this.model.get('height');
-        //this.value_changed();
-        //this.model.on('change:value', this.value_changed, this);
+        //this.projection_changed();
+        this.model.on('change:projection', this.projection_changed, this);
         this.displayed.then(_.bind(this.render_earth, this));
     },
 
-    //value_changed: function() {
-    //    this.el.textContent = this.model.get('value');
-    //}
+    projection_changed: function() {
+    //    this.el.textContent = this.model.get('projection');
+        console.log(this.obj);
+        this.obj.configuration.save({projection: this.model.get('projection')});
+    },
 
     render_earth: function () {
         this.create_obj();
+        //this.obj.update(this.model.get('projection'));
+
         //this.layer_views.update(this.model.get('layers'));
         //this.control_views.update(this.model.get('controls'));
         //this.leaflet_events();
