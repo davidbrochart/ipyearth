@@ -14,3 +14,6 @@ class Earth(DOMWidget):
     _view_module_version = Unicode('^0.1.0').tag(sync=True)
     _model_module_version = Unicode('^0.1.0').tag(sync=True)
     projection = Unicode('orthographic').tag(sync=True)
+    #with open('/home/david/git/ipyearth/examples/data/earth-topo.json') as f:
+    #    topo_json = f.read()
+    topology = Unicode('').tag(sync=True)

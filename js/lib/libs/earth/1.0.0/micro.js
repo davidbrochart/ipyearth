@@ -15,7 +15,7 @@
     var τ = 2 * Math.PI;
     var H = 0.0000360;  // 0.0000360°φ ~= 4m
     var DEFAULT_CONFIG = "current/wind/surface/level/orthographic";
-    var TOPOLOGY = isMobile() ? "files/data/earth-topo-mobile.json?v2" : "files/data/earth-topo.json?v2";
+    //var TOPOLOGY = isMobile() ? "files/data/earth-topo-mobile.json?v2" : "files/data/earth-topo.json?v2";
 
     /**
      * @returns {Boolean} true if the specified value is truthy.
@@ -533,7 +533,8 @@
                 level: tokens[8],            // non-empty alphanumeric _
                 projection: "orthographic",
                 orientation: "",
-                topology: TOPOLOGY,
+                //topology: TOPOLOGY,
+                topology: {"type":"Topology","transform":{"scale":[0.036003600360036005,0.016927109488408615],"translate":[-180,-85.60903777459774]},"objects":{"coastline_110m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "coastline_50m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "lakes_110m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "lakes_50m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}},"arcs":[[[0,0]]]},
                 overlayType: "default",
                 showGridPoints: false
             };
@@ -593,8 +594,7 @@
                         return;
                     }
                     model.set(parse(
-                        //window.location.hash.substr(1) || DEFAULT_CONFIG,
-                        DEFAULT_CONFIG,
+                        DEFAULT_CONFIG, //window.location.hash.substr(1) || DEFAULT_CONFIG,
                         model._projectionNames,
                         model._overlayTypes));
                     break;

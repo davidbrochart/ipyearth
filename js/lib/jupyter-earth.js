@@ -38,38 +38,26 @@ var EarthView = widgets.DOMWidgetView.extend({
     render: function() {
         this.el.style['width'] = this.model.get('width');
         this.el.style['height'] = this.model.get('height');
-        //this.projection_changed();
         this.model.on('change:projection', this.projection_changed, this);
+        this.model.on('change:topology', this.topology_changed, this);
         this.displayed.then(_.bind(this.render_earth, this));
     },
 
     projection_changed: function() {
-    //    this.el.textContent = this.model.get('projection');
-        console.log(this.obj);
         this.obj.configuration.save({projection: this.model.get('projection')});
+    },
+
+    topology_changed: function() {
+        this.obj.configuration.save({topology: JSON.parse(this.model.get('topology'))});
     },
 
     render_earth: function () {
         this.create_obj();
-        //this.obj.update(this.model.get('projection'));
-
-        //this.layer_views.update(this.model.get('layers'));
-        //this.control_views.update(this.model.get('controls'));
-        //this.leaflet_events();
-        //this.model_events();
-        //this.update_bounds();
-        // TODO: hack to get all the tiles to show.
-        //var that = this;
-        //window.setTimeout(function () {
-        //    that.obj.invalidateSize();
-        //}, 1000);
-        //return that;
         return this;
     },
 
     create_obj: function () {
         this.obj = E.map(this.el);
-        //this.obj = E.test(this.el);
     }
 
 });

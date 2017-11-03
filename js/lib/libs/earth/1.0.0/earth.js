@@ -7,24 +7,6 @@
  * https://github.com/cambecc/earth
  */
 
-module.exports['test'] = function(element) {
-    var svg_map = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg_map.setAttribute('id', 'map');
-    svg_map.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-        
-    var shape = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    shape.setAttributeNS(null, "cx", 25);
-    shape.setAttributeNS(null, "cy", 25);
-    shape.setAttributeNS(null, "r",  20);
-    shape.setAttributeNS(null, "fill", "green"); 
-
-    var e = svg_map;
-    e.appendChild(shape);
-
-    var e = element;
-    e.appendChild(svg_map);
-};
-
 module.exports['map'] = function(element) {
     "use strict";
 
@@ -258,17 +240,39 @@ module.exports['map'] = function(element) {
      * @param resource the GeoJSON resource's URL
      * @returns {Object} a promise for GeoJSON topology features: {boundaryLo:, boundaryHi:}
      */
-    function buildMesh(resource) {
+    //function buildMesh(resource) {
+    //    var cancel = this.cancel;
+    //    report.status("Downloading...");
+    //    return µ.loadJson(resource).then(function(topo) {
+    //        if (cancel.requested) return null;
+    //        log.time("building meshes");
+    //        var o = topo.objects;
+    //        var coastLo = topojson.feature(topo, µ.isMobile() ? o.coastline_tiny : o.coastline_110m);
+    //        var coastHi = topojson.feature(topo, µ.isMobile() ? o.coastline_110m : o.coastline_50m);
+    //        var lakesLo = topojson.feature(topo, µ.isMobile() ? o.lakes_tiny : o.lakes_110m);
+    //        var lakesHi = topojson.feature(topo, µ.isMobile() ? o.lakes_110m : o.lakes_50m);
+    //        log.timeEnd("building meshes");
+    //        return {
+    //            coastLo: coastLo,
+    //            coastHi: coastHi,
+    //            lakesLo: lakesLo,
+    //            lakesHi: lakesHi
+    //        };
+    //    });
+    //}
+    function buildMesh(ressource) {
         var cancel = this.cancel;
         report.status("Downloading...");
-        return µ.loadJson(resource).then(function(topo) {
-            if (cancel.requested) return null;
+        var d = when.defer();
+        d.resolve(ressource);
+        return d.promise.then(function(topo) {
+            //if (cancel.requested) return null;
             log.time("building meshes");
             var o = topo.objects;
-            var coastLo = topojson.feature(topo, µ.isMobile() ? o.coastline_tiny : o.coastline_110m);
-            var coastHi = topojson.feature(topo, µ.isMobile() ? o.coastline_110m : o.coastline_50m);
-            var lakesLo = topojson.feature(topo, µ.isMobile() ? o.lakes_tiny : o.lakes_110m);
-            var lakesHi = topojson.feature(topo, µ.isMobile() ? o.lakes_110m : o.lakes_50m);
+            var coastLo = topojson.feature(topo, o.coastline_110m);
+            var coastHi = topojson.feature(topo, o.coastline_50m);
+            var lakesLo = topojson.feature(topo, o.lakes_110m);
+            var lakesHi = topojson.feature(topo, o.lakes_50m);
             log.timeEnd("building meshes");
             return {
                 coastLo: coastLo,
@@ -1168,8 +1172,7 @@ module.exports['map'] = function(element) {
         configuration.fetch();
     }
 
-    console.log(configuration);
     when(true).then(init).then(start).otherwise(report.error);
 
-    return {'configuration': configuration};
+    return {'configuration': configuration,};
 };
