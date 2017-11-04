@@ -309,7 +309,7 @@ module.exports['map'] = function(element) {
             return product.load(cancel);
         });
         return when.all(loaded).then(function(products) {
-            log.time("build grids");
+            log.timeEnd("build grids");
             return {primaryGrid: products[0], overlayGrid: products[1] || products[0]};
         }).ensure(function() {
             downloadsInProgress--;
@@ -754,6 +754,7 @@ module.exports['map'] = function(element) {
         // When the active layer is considered "current", use its time as now, otherwise use current time as
         // now (but rounded down to the nearest three-hour block).
         var THREE_HOURS = 3 * HOUR;
+        console.log(grids);
         var now = grids ? grids.primaryGrid.date.getTime() : Math.floor(Date.now() / THREE_HOURS) * THREE_HOURS;
         var parts = configuration.get("date").split("/");  // yyyy/mm/dd or "current"
         var hhmm = configuration.get("hour");

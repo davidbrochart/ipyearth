@@ -14,7 +14,7 @@
 
     var τ = 2 * Math.PI;
     var H = 0.0000360;  // 0.0000360°φ ~= 4m
-    var DEFAULT_CONFIG = "current/wind/surface/level/orthographic";
+    var DEFAULT_CONFIG = "current/wind/surface/level/orthographic/overlay=off";
     //var TOPOLOGY = isMobile() ? "files/data/earth-topo-mobile.json?v2" : "files/data/earth-topo.json?v2";
 
     /**
@@ -528,14 +528,16 @@
             result = {
                 date: date,                  // "current" or "yyyy/mm/dd"
                 hour: hour,                  // "hhhh" or ""
-                param: tokens[6],            // non-empty alphanumeric _
+                param: "None", //tokens[6],            // non-empty alphanumeric _
                 surface: tokens[7],          // non-empty alphanumeric _
                 level: tokens[8],            // non-empty alphanumeric _
                 projection: "orthographic",
                 orientation: "",
                 //topology: TOPOLOGY,
                 topology: {"type":"Topology","transform":{"scale":[0.036003600360036005,0.016927109488408615],"translate":[-180,-85.60903777459774]},"objects":{"coastline_110m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "coastline_50m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "lakes_110m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "lakes_50m":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}},"arcs":[[[0,0]]]},
-                overlayType: "default",
+                overlayType: "off",
+                //vector_data: [{"header":{"discipline":0,"disciplineName":"Meteorological products","gribEdition":2,"gribLength":131858,"center":7,"centerName":"US National Weather Service - NCEP(WMC)","subcenter":0,"refTime":"2014-01-31T00:00:00.000Z","significanc eOfRT":1,"significanceOfRTName":"Start of forecast","productStatus":0,"productStatusName":"Operational products","productType":1,"productTypeName":"Forecast products","productDefinitionTemplate":0,"productDefinitionTemplateName":"Analy sis/forecast at horizontal level/layer at a point in time","parameterCategory":2,"parameterCategoryName":"Momentum","parameterNumber":2,"parameterNumberName":"U-component_of_wind","parameterUnit":"m.s-1","genProcessType":2,"genProcessT ypeName":"Forecast","forecastTime":3,"surface1Type":103,"surface1TypeName":"Specified height level above ground","surface1Value":10,"surface2Type":255,"surface2TypeName":"Missing","surface2Value":0,"gridDefinitionTemplate":0,"gridDefin itionTemplateName":"Latitude_Longitude","numberPoints":65160,"shape":6,"shapeName":"Earth spherical with radius of 6,371,229.0 m","gridUnits":"degrees","resolution":48,"winds":"true","scanMode":0,"nx":360,"ny":181,"basicAngle":0,"subDi visions":0,"lo1":0,"la1":90,"lo2":359,"la2":-90,"dx":1,"dy":1},"data":[]}],
+                vector_data: [],
                 showGridPoints: false
             };
             coalesce(tokens[9], "").split("/").forEach(function(segment) {
