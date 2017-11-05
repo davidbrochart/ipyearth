@@ -16,3 +16,21 @@ class Earth(DOMWidget):
     projection = Unicode('orthographic').tag(sync=True)
     topology = Unicode('').tag(sync=True)
     vector_field = Unicode('').tag(sync=True)
+    overlay = Unicode('').tag(sync=True)
+
+    def set_projection(self, projection):
+        self.projection = projection
+
+    def show_topology(self, topology):
+        self.topology = topology
+
+    def show_wind(self, vector_field):
+        self.overlay = 'wind'
+        self.vector_field = vector_field
+
+    def show_ocean(self, vector_field):
+        self.overlay = 'ocean'
+        self.vector_field = vector_field
+
+    def show_overlay(self, overlay):
+        self.overlay = overlay

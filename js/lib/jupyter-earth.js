@@ -41,6 +41,7 @@ var EarthView = widgets.DOMWidgetView.extend({
         this.model.on('change:projection', this.projection_changed, this);
         this.model.on('change:topology', this.topology_changed, this);
         this.model.on('change:vector_field', this.vector_field_changed, this);
+        this.model.on('change:overlay', this.overlay_changed, this);
         this.displayed.then(_.bind(this.render_earth, this));
     },
 
@@ -53,11 +54,14 @@ var EarthView = widgets.DOMWidgetView.extend({
     },
 
     vector_field_changed: function() {
+        var overlay = this.model.get('overlay');
         var vector_field = this.model.get('vector_field');
-        if (vector_field === 'off')
-            this.obj.configuration.save({param: 'off'});
-        else
-            this.obj.configuration.save({param: 'wind', overlayType: 'vector_field', vector_data: JSON.parse(vector_field)});
+        this.obj.configuration.save({param: overlay, overlayType: overlay, vector_data: JSON.parse(vector_field)});
+    },
+
+    overlay_changed: function() {
+        var overlay = this.model.get('overlay');
+        this.obj.configuration.save({overlayType: overlay});
     },
 
     render_earth: function () {
