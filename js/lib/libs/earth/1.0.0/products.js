@@ -14,11 +14,11 @@ products = function() {
 
     var WEATHER_PATH = "files/data/weather";
     var OSCAR_PATH = "files/data/oscar";
-    var catalogs = {
-        // The OSCAR catalog is an array of file names, sorted and prefixed with yyyyMMdd. Last item is the
-        // most recent. For example: [ 20140101-abc.json, 20140106-abc.json, 20140112-abc.json, ... ]
-        oscar: µ.loadJson([OSCAR_PATH, "catalog.json"].join("/"))
-    };
+    //var catalogs = {
+    //    // The OSCAR catalog is an array of file names, sorted and prefixed with yyyyMMdd. Last item is the
+    //    // most recent. For example: [ 20140101-abc.json, 20140106-abc.json, 20140112-abc.json, ... ]
+    //    oscar: µ.loadJson([OSCAR_PATH, "catalog.json"].join("/"))
+    //};
 
     function buildProduct(overrides) {
         return _.extend({
@@ -32,9 +32,7 @@ products = function() {
                 var me = this;
                 var d = when.defer();
                 d.resolve(this.vector_data);
-                console.log(this);
                 return d.promise.then(function(data) {
-                    console.log('data=', data);
                     return cancel.requested ? null : _.extend(me, buildGrid(me.builder(data)));
                 });
                 //return when.map(this.paths, µ.loadJson).then(function(files) {
@@ -133,7 +131,6 @@ products = function() {
                     vector_data: attr.vector_data,
                     date: gfsDate(attr),
                     builder: function(file) {
-                        console.log(file);
                         var uData = file[0].data, vData = file[1].data;
                         return {
                             header: file[0].header,
@@ -732,7 +729,6 @@ products = function() {
     function productsFor(attributes) {
         var attr = _.clone(attributes), results = [];
         _.values(FACTORIES).forEach(function(factory) {
-            console.log(factory);
             if (factory.matches(attr)) {
                 results.push(factory.create(attr));
             }

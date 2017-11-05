@@ -17,12 +17,12 @@ module.exports['map'] = function(element) {
             el.appendChild(div.children[0]);
         }
     }
-    var html = '<div id="display"> <svg id="map" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> <canvas id="animation" class="fill-screen"></canvas> <canvas id="overlay" class="fill-screen"></canvas> <svg id="foreground" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> </div> <div id="details"> <p id="status"></p> <div id="location"> <p> <span id="location-coord"></span> <span id="location-close" class="invisible text-button"> ✕ </span> </p> <p> <span id="location-wind"></span> <span id="location-wind-units" class="text-button"></span> </p> <p> <span id="location-value"></span> <span id="location-value-units" class="text-button"></span> </p> </div> <p id="earth"> <span id="show-menu" class="text-button" title="menu">earth</span> <span id="progress" class="invisible"></span> </p> <div id="menu" class="invisible"> <p>Date | <span id="data-date" class="local"></span> <span id="toggle-zone" class="text-button"></span> </p> <p>Data | <span id="data-layer"></span></p> <p><span id="scale-label">Scale | </span><canvas id="scale"></canvas></p> <p>Source | <span id="data-center"></span></p> <p>Control | <span class="text-button" id="nav-now" title="Current Conditions">Now</span><span class="text-button" id="nav-backward-more"> « </span> – <span class="text-button" id="nav-backward"> ‹ </span> – <span class="text-button" id="nav-forward"> › </span> – <span class="text-button" id="nav-forward-more"> » </span><span class="text-button" id="show-location" title="Current Position">〖◯〗</span><span class="text-button" id="option-show-grid" title="Toggle Grid">Grid</span> </p> <p>Mode | <span class="text-button" id="wind-mode-enable">Air</span> – <span class="text-button" id="ocean-mode-enable">Ocean</span> </p> <p class="wind-mode">Height | <span class="surface text-button" id="surface-level" title="Surface">Sfc</span> – <span class="surface text-button" id="isobaric-1000hPa">1000</span> – <span class="surface text-button" id="isobaric-850hPa">850</span> – <span class="surface text-button" id="isobaric-700hPa">700</span> – <span class="surface text-button" id="isobaric-500hPa">500</span> – <span class="surface text-button" id="isobaric-250hPa">250</span> – <span class="surface text-button" id="isobaric-70hPa">70</span> – <span class="surface text-button" id="isobaric-10hPa">10</span> hPa </p> <p class="wind-mode">Overlay | <span class="text-button" id="overlay-off">None</span> – <span class="text-button" id="overlay-wind" title="Wind Speed">Wind</span> – <span class="text-button" id="overlay-temp" title="Temperature">Temp</span> – <span class="text-button" id="overlay-relative_humidity" title="Relative Humidity">RH</span> – <span class="text-button" id="overlay-air_density" title="Air Density">AD</span> – <span class="text-button" id="overlay-wind_power_density" title="Wind Power Density">WPD</span> </p> <p class="wind-mode"><span style="visibility:hidden">Overlay</span> | <span class="text-button" id="overlay-total_precipitable_water" title="Total Precipitable Water">TPW</span> – <span class="text-button" id="overlay-total_cloud_water" title="Total Cloud Water">TCW</span> – <span class="text-button" id="overlay-mean_sea_level_pressure" title="Mean Sea Level Pressure">MSLP</span> </p> <p class="ocean-mode invisible">Animate | <span class="text-button" id="animate-currents" title="Currents">Currents</span> </p> <p class="ocean-mode invisible">Overlay | <span class="text-button" id="overlay-ocean-off">None</span> – <span class="text-button" id="overlay-currents" title="Currents">Currents</span> </p> <p class="ocean-mode invisible"><span style="visibility:hidden">Overlay</span> |</p> <p>Projection | <span class="proj text-button" id="atlantis" title="Atlantis">A</span> – <span class="proj text-button" id="azimuthal_equidistant" title="Azimuthal Equidistant">AE</span> – <span class="proj text-button" id="conic_equidistant" title="Conic Equidistant">CE</span> – <span class="proj text-button" id="equirectangular" title="Equirectangular">E</span> – <span class="proj text-button" id="orthographic" title="Orthographic">O</span> – <span class="proj text-button" id="stereographic" title="Stereographic">S</span> – <span class="proj text-button" id="waterman" title="Waterman Butterfly">WB</span> – <span class="proj text-button" id="winkel3" title="Winkel Tripel">W3</span> </p> <!--<p>免責事項 | 正確な情報を提供するためのものではありません</p>--> <p id="lang"><a href="/jp" class="internal-link">日本語</a></p> <p> <a href="about.html" class="internal-link">about</a> <a href="https://www.facebook.com/EarthWindMap" class="social-icon" title="Facebook">&#xe027;</a> <a href="https://twitter.com/cambecc" class="social-icon" title="Twitter">&#xe086;</a> </p> </div> </div>'
+    var html = '<div id="display"> <svg id="map" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> <canvas id="animation" class="fill-screen"></canvas> <canvas id="overlay" class="fill-screen"></canvas> <svg id="foreground" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> </div> <div id="details"> <p id="status"></p> <div id="location"> <p> <span id="location-coord"></span> <span id="location-close" class="invisible text-button"> ✕ </span> </p> <p> <span id="location-wind"></span> <span id="location-wind-units" class="text-button"></span> </p> <p> <span id="location-value"></span> <span id="location-value-units" class="text-button"></span> </p> </div> <div id="menu" class="invisible"> <p><span id="scale-label">Scale | </span><canvas id="scale"></canvas></p> </div> </div>'
     appendHtml(element, html);
 
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } #details { position: absolute; bottom: 3%; left: 2%; pointer-events: none;  /* This div is just a container--do not let it interfere with operation of the map. */ } #earth { background-color: rgba(0, 0, 5, 0.6); border-radius: 0.5rem/0.5rem; display: table; margin-top: 1rem; padding: 0 1rem 0 1rem; pointer-events: all; } #menu { background-color: rgba(5, 10, 30, 0.85); border-radius: 0.5rem/0.5rem; overflow: hidden; pointer-events: all; margin-top: 1rem; padding: 0.5rem 1rem 0.5rem 1rem; opacity: 1; max-height: 34rem; transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; -webkit-transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; } #menu.invisible { margin-top: 0; padding: 0 1rem 0 1rem; opacity: 0; max-height: 0; transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; -webkit-transition: opacity 250ms ease, max-height 250ms ease, margin-top 250ms ease; } #progress { padding-left: 1rem; } #nav-now { padding-right: 1rem; } #nav-backward, #nav-backward-more, #nav-forward, #nav-forward-more, #option-show-grid { padding-left: 1rem; padding-right: 1rem; } #show-location { padding-left: 0.25rem; padding-right: 0.25rem; } #lang { font-size: 1.25rem; float: right; padding-top: 0.5rem; } .social-icon { font-size: 2.25rem; font-family: monosocialiconsfont-sub,sans-serif; padding-left: 0.25rem; text-decoration: none; position: relative; top: 0.1rem; } .internal-link { text-decoration: none; } .coastline, .lakes { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .coastline, .firefox .lakes { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
+    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } .coastline, .lakes { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .coastline, .firefox .lakes { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
     element.appendChild(style);
 
     element.style.backgroundColor = 'black'; 
@@ -69,30 +69,30 @@ module.exports['map'] = function(element) {
      * An object to display various types of messages to the user.
      */
     var report = function() {
-        var s = d3.select("#status"), p = d3.select("#progress"), total = REMAINING.length;
+        //var s = d3.select("#status"), p = d3.select("#progress"), total = REMAINING.length;
         return {
             status: function(msg) {
-                return s.classed("bad") ? s : s.text(msg);  // errors are sticky until reset
+                //return s.classed("bad") ? s : s.text(msg);  // errors are sticky until reset
             },
             error: function(err) {
-                var msg = err.status ? err.status + " " + err.message : err;
-                switch (err.status) {
-                    case -1: msg = "Server Down"; break;
-                    case 404: msg = "No Data"; break;
-                }
-                log.error(err);
-                return s.classed("bad", true).text(msg);
+                //var msg = err.status ? err.status + " " + err.message : err;
+                //switch (err.status) {
+                //    case -1: msg = "Server Down"; break;
+                //    case 404: msg = "No Data"; break;
+                //}
+                //log.error(err);
+                //return s.classed("bad", true).text(msg);
             },
             reset: function() {
-                return s.classed("bad", false).text("");
+                //return s.classed("bad", false).text("");
             },
             progress: function(amount) {  // amount of progress to report in the range [0, 1]
-                if (0 <= amount && amount < 1) {
-                    var i = Math.ceil(amount * total);
-                    var bar = COMPLETED.substr(0, i) + REMAINING.substr(0, total - i);
-                    return p.classed("invisible", false).text(bar);
-                }
-                return p.classed("invisible", true).text("");  // progress complete
+                //if (0 <= amount && amount < 1) {
+                //    var i = Math.ceil(amount * total);
+                //    var bar = COMPLETED.substr(0, i) + REMAINING.substr(0, total - i);
+                //    return p.classed("invisible", false).text(bar);
+                //}
+                //return p.classed("invisible", true).text("");  // progress complete
             }
         };
     }();
@@ -754,7 +754,6 @@ module.exports['map'] = function(element) {
         // When the active layer is considered "current", use its time as now, otherwise use current time as
         // now (but rounded down to the nearest three-hour block).
         var THREE_HOURS = 3 * HOUR;
-        console.log(grids);
         var now = grids ? grids.primaryGrid.date.getTime() : Math.floor(Date.now() / THREE_HOURS) * THREE_HOURS;
         var parts = configuration.get("date").split("/");  // yyyy/mm/dd or "current"
         var hhmm = configuration.get("hour");
@@ -776,22 +775,22 @@ module.exports['map'] = function(element) {
     /**
      * Display the grids' types in the menu.
      */
-    function showGridDetails(grids) {
-        showDate(grids);
-        var description = "", center = "";
-        if (grids) {
-            var langCode = d3.select("body").attr("data-lang") || "en";
-            var pd = grids.primaryGrid.description(langCode), od = grids.overlayGrid.description(langCode);
-            description = od.name + od.qualifier;
-            if (grids.primaryGrid !== grids.overlayGrid) {
-                // Combine both grid descriptions together with a " + " if their qualifiers are the same.
-                description = (pd.qualifier === od.qualifier ? pd.name : pd.name + pd.qualifier) + " + " + description;
-            }
-            center = grids.overlayGrid.source;
-        }
-        d3.select("#data-layer").text(description);
-        d3.select("#data-center").text(center);
-    }
+    //function showGridDetails(grids) {
+    //    showDate(grids);
+    //    var description = "", center = "";
+    //    if (grids) {
+    //        var langCode = d3.select("body").attr("data-lang") || "en";
+    //        var pd = grids.primaryGrid.description(langCode), od = grids.overlayGrid.description(langCode);
+    //        description = od.name + od.qualifier;
+    //        if (grids.primaryGrid !== grids.overlayGrid) {
+    //            // Combine both grid descriptions together with a " + " if their qualifiers are the same.
+    //            description = (pd.qualifier === od.qualifier ? pd.name : pd.name + pd.qualifier) + " + " + description;
+    //        }
+    //        center = grids.overlayGrid.source;
+    //    }
+    //    d3.select("#data-layer").text(description);
+    //    d3.select("#data-center").text(center);
+    //}
 
     /**
      * Constructs a toggler for the specified product's units, storing the toggle state on the element having
@@ -1009,12 +1008,12 @@ module.exports['map'] = function(element) {
                 gridAgent.submit(buildGrids);
             }
         });
-        gridAgent.on("submit", function() {
-            showGridDetails(null);
-        });
-        gridAgent.on("update", function(grids) {
-            showGridDetails(grids);
-        });
+        //gridAgent.on("submit", function() {
+        //    showGridDetails(null);
+        //});
+        //gridAgent.on("update", function(grids) {
+        //    showGridDetails(grids);
+        //});
         d3.select("#toggle-zone").on("click", function() {
             d3.select("#data-date").classed("local", !d3.select("#data-date").classed("local"));
             showDate(gridAgent.cancel.requested ? null : gridAgent.value());
