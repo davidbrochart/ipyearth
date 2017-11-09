@@ -22,7 +22,7 @@ module.exports['map'] = function(element) {
 
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } .coastline, .lakes { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .coastline, .firefox .lakes { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
+    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } .topo { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .topo { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
     element.appendChild(style);
 
     element.style.backgroundColor = 'black'; 
@@ -269,16 +269,12 @@ module.exports['map'] = function(element) {
             //if (cancel.requested) return null;
             log.time("building meshes");
             var o = topo.objects;
-            var coastLo = topojson.feature(topo, o.coastline_110m);
-            var coastHi = topojson.feature(topo, o.coastline_50m);
-            var lakesLo = topojson.feature(topo, o.lakes_110m);
-            var lakesHi = topojson.feature(topo, o.lakes_50m);
+            var topoLo = topojson.feature(topo, o.topoLo);
+            var topoHi = topojson.feature(topo, o.topoHi);
             log.timeEnd("building meshes");
             return {
-                coastLo: coastLo,
-                coastHi: coastHi,
-                lakesLo: lakesLo,
-                lakesHi: lakesHi
+                topoLo: topoLo,
+                topoHi: topoHi
             };
         });
     }
@@ -350,8 +346,7 @@ module.exports['map'] = function(element) {
         globe.defineMap(d3.select("#map"), d3.select("#foreground"));
 
         var path = d3.geo.path().projection(globe.projection).pointRadius(7);
-        var coastline = d3.select(".coastline");
-        var lakes = d3.select(".lakes");
+        var topo = d3.select(".topo");
         d3.selectAll("path").attr("d", path);  // do an initial draw -- fixes issue with safari
 
         function drawLocationMark(point, coord) {
@@ -389,16 +384,14 @@ module.exports['map'] = function(element) {
         dispatch.listenTo(
             inputController, {
                 moveStart: function() {
-                    coastline.datum(mesh.coastLo);
-                    lakes.datum(mesh.lakesLo);
+                    topo.datum(mesh.topoLo);
                     rendererAgent.trigger("start");
                 },
                 move: function() {
                     doDraw_throttled();
                 },
                 moveEnd: function() {
-                    coastline.datum(mesh.coastHi);
-                    lakes.datum(mesh.lakesHi);
+                    topo.datum(mesh.topoHi);
                     d3.selectAll("path").attr("d", path);
                     rendererAgent.trigger("render");
                 },

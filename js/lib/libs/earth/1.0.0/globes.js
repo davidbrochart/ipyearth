@@ -187,9 +187,7 @@ globes = function() {
                     .datum(d3.geo.graticule().minorStep([0, 90]).majorStep([0, 90]))
                     .attr("d", path);
                 mapSvg.append("path")
-                    .attr("class", "coastline");
-                mapSvg.append("path")
-                    .attr("class", "lakes");
+                    .attr("class", "topo");
                 foregroundSvg.append("use")
                     .attr("xlink:href", "#sphere")
                     .attr("class", "foreground-sphere");
@@ -271,9 +269,7 @@ globes = function() {
                     .datum(d3.geo.graticule().minorStep([0, 90]).majorStep([0, 90]))
                     .attr("d", path);
                 mapSvg.append("path")
-                    .attr("class", "coastline");
-                mapSvg.append("path")
-                    .attr("class", "lakes");
+                    .attr("class", "topo");
                 foregroundSvg.append("use")
                     .attr("xlink:href", "#sphere")
                     .attr("class", "foreground-sphere");
@@ -321,10 +317,7 @@ globes = function() {
                     .datum(d3.geo.graticule())
                     .attr("d", path);
                 mapSvg.append("path")
-                    .attr("class", "coastline")
-                    .attr("clip-path", "url(#clip)");
-                mapSvg.append("path")
-                    .attr("class", "lakes")
+                    .attr("class", "topo")
                     .attr("clip-path", "url(#clip)");
                 foregroundSvg.append("use")
                     .attr("xlink:href", "#sphere")
