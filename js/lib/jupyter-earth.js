@@ -41,7 +41,15 @@ var EarthView = widgets.DOMWidgetView.extend({
         this.model.on('change:projection', this.projection_changed, this);
         this.model.on('change:topology', this.topology_changed, this);
         this.model.on('change:vector_field', this.vector_field_changed, this);
+        this.model.on('change:vector_show', this.vector_show_changed, this);
+        this.model.on('change:scalar_field', this.scalar_field_changed, this);
         this.model.on('change:overlay', this.overlay_changed, this);
+        this.model.on('change:param', this.param_changed, this);
+        this.model.on('change:color_map', this.color_map_changed, this);
+        this.model.on('change:color_vmin', this.color_vmin_changed, this);
+        this.model.on('change:color_vmax', this.color_vmax_changed, this);
+        this.model.on('change:particleVelocityScale', this.particleVelocityScale_changed, this);
+        this.model.on('change:particleMaxIntensity', this.particleMaxIntensity_changed, this);
         this.displayed.then(_.bind(this.render_earth, this));
     },
 
@@ -54,14 +62,48 @@ var EarthView = widgets.DOMWidgetView.extend({
     },
 
     vector_field_changed: function() {
-        var overlay = this.model.get('overlay');
         var vector_field = this.model.get('vector_field');
-        this.obj.configuration.save({param: overlay, overlayType: overlay, vector_data: JSON.parse(vector_field)});
+        this.obj.configuration.save({vector_data: JSON.parse(vector_field)});
+    },
+
+    vector_show_changed: function() {
+        var vector_show = this.model.get('vector_show');
+        this.obj.configuration.save({vector_show: JSON.parse(vector_show)});
+    },
+
+    scalar_field_changed: function() {
+        var scalar_field = this.model.get('scalar_field');
+        this.obj.configuration.save({scalar_data: JSON.parse(scalar_field)});
     },
 
     overlay_changed: function() {
         var overlay = this.model.get('overlay');
         this.obj.configuration.save({overlayType: overlay});
+    },
+
+    param_changed: function() {
+        var param = this.model.get('param');
+        this.obj.configuration.save({param: param});
+    },
+
+    color_map_changed: function() {
+        this.obj.configuration.save({color_map: this.model.get('color_map')});
+    },
+
+    color_vmin_changed: function() {
+        this.obj.configuration.save({color_vmin: this.model.get('color_vmin')});
+    },
+
+    color_vmax_changed: function() {
+        this.obj.configuration.save({color_vmax: this.model.get('color_vmax')});
+    },
+
+    particleVelocityScale_changed: function() {
+        this.obj.configuration.save({particleVelocityScale: this.model.get('particleVelocityScale')});
+    },
+
+    particleMaxIntensity_changed: function() {
+        this.obj.configuration.save({particleMaxIntensity: this.model.get('particleMaxIntensity')});
     },
 
     render_earth: function () {

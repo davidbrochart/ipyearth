@@ -1,3 +1,5 @@
+# from https://github.com/omarestrella/simplify.py
+
 def getSquareDistance(p1, p2):
     """
     Square distance between two points

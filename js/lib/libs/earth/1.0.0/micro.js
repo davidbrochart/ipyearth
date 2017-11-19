@@ -178,7 +178,7 @@
         //var y = w.innerHeight || d.clientHeight || b.clientHeight;
         var x = element.offsetWidth;
         var y = element.offsetHeight;
-        return {width: x, height: y};
+        return {width: x, height: y * 0.955};
     }
 
     /**
@@ -528,7 +528,7 @@
             result = {
                 date: date,                  // "current" or "yyyy/mm/dd"
                 hour: hour,                  // "hhhh" or ""
-                param: "None", //tokens[6],            // non-empty alphanumeric _
+                param: "off", //tokens[6],            // non-empty alphanumeric _
                 surface: tokens[7],          // non-empty alphanumeric _
                 level: tokens[8],            // non-empty alphanumeric _
                 projection: "orthographic",
@@ -536,8 +536,14 @@
                 //topology: TOPOLOGY,
                 topology: {"type":"Topology","transform":{"scale":[0.036003600360036005,0.016927109488408615],"translate":[-180,-85.60903777459774]},"objects":{"topoHi":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "topoLo":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}},"arcs":[[[0,0]]]},
                 overlayType: "off",
-                vector_data: [],
+                vector_data: [{"header":{"discipline":0,"disciplineName":"Meteorological products","gribEdition":2,"gribLength":1,"center":7,"centerName":"US National Weather Service - NCEP(WMC)","subcenter":0,"refTime":"2014-01-31T00:00:00.000Z","significanceOfRT":1,"significanceOfRTName":"Start of forecast","productStatus":0,"productStatusName":"Operational products","productType":1,"productTypeName":"Forecast products","productDefinitionTemplate":0,"productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time","parameterCategory":2,"parameterCategoryName":"Momentum","parameterNumber":2,"parameterNumberName":"U-component_of_wind","parameterUnit":"m.s-1","genProcessType":2,"genProcessTypeName":"Forecast","forecastTime":3,"surface1Type":103,"surface1TypeName":"Specified height level above ground","surface1Value":10,"surface2Type":255,"surface2TypeName":"Missing","surface2Value":0,"gridDefinitionTemplate":0,"gridDefinitionTemplateName":"Latitude_Longitude","numberPoints":65160,"shape":6,"shapeName":"Earth spherical with radius of 6,371,229.0 m","gridUnits":"degrees","resolution":48,"winds":"true","scanMode":0,"nx":360,"ny":181,"basicAngle":0,"subDivisions":0,"lo1":0,"la1":90,"lo2":359,"la2":-90,"dx":1,"dy":1},"data":[0], "meta":{"date":"2014-01-31T03:00:00.000Z"}}, {"header":{"discipline":0,"disciplineName":"Meteorological products","gribEdition":2,"gribLength":1,"center":7,"centerName":"US National Weather Service - NCEP(WMC)","subcenter":0,"refTime":"2014-01-31T00:00:00.000Z","significanceOfRT":1,"significanceOfRTName":"Start of forecast","productStatus":0,"productStatusName":"Operational products","productType":1,"productTypeName":"Forecast products","productDefinitionTemplate":0,"productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time","parameterCategory":2,"parameterCategoryName":"Momentum","parameterNumber":3,"parameterNumberName":"V-component_of_wind","parameterUnit":"m.s-1","genProcessType":2,"genProcessTypeName":"Forecast","forecastTime":3,"surface1Type":103,"surface1TypeName":"Specified height level above ground","surface1Value":10,"surface2Type":255,"surface2TypeName":"Missing","surface2Value":0,"gridDefinitionTemplate":0,"gridDefinitionTemplateName":"Latitude_Longitude","numberPoints":65160,"shape":6,"shapeName":"Earth spherical with radius of 6,371,229.0 m","gridUnits":"degrees","resolution":48,"winds":"true","scanMode":0,"nx":360,"ny":181,"basicAngle":0,"subDivisions":0,"lo1":0,"la1":90,"lo2":359,"la2":-90,"dx":1,"dy":1},"data":[0],"meta":{"date":"2014-01-31T03:00:00.000Z"}}],
+                vector_show: "true",
                 scalar_data: [],
+                color_map: "0",
+                color_vmin: 0,
+                color_vmax: 100,
+                particleVelocityScale: 1/60000,
+                particleMaxIntensity: 17,
                 showGridPoints: false
             };
             coalesce(tokens[9], "").split("/").forEach(function(segment) {

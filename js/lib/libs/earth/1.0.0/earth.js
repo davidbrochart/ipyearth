@@ -17,12 +17,12 @@ module.exports['map'] = function(element) {
             el.appendChild(div.children[0]);
         }
     }
-    var html = '<div id="display"> <svg id="map" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> <canvas id="animation" class="fill-screen"></canvas> <canvas id="overlay" class="fill-screen"></canvas> <svg id="foreground" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> </div> <div id="details"> <p id="status"></p> <div id="location"> <p> <span id="location-coord"></span> <span id="location-close" class="invisible text-button"> ✕ </span> </p> <p> <span id="location-wind"></span> <span id="location-wind-units" class="text-button"></span> </p> <p> <span id="location-value"></span> <span id="location-value-units" class="text-button"></span> </p> </div> <div id="menu" class="invisible"> <p><span id="scale-label">Scale | </span><canvas id="scale"></canvas></p> </div> </div>'
+    var html = '<div id="display"> <svg id="map" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> <canvas id="animation" class="fill-screen"></canvas> <canvas id="overlay" class="fill-screen"></canvas> <svg id="foreground" class="fill-screen" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg> </div> <div id="details"> <p id="status"></p> <div id="location"> <p> <span id="location-coord"></span> <span id="location-close" class="invisible text-button"> ✕ </span> </p> <p> <span id="location-wind"></span> <span id="location-wind-units" class="text-button"></span> </p> <p> <span id="location-value"></span> <span id="location-value-units" class="text-button"></span> </p> </div> <div id="menu" class="invisible"> </div> </div> <div id="scale-label"><canvas id="scale"></canvas></div> '
     appendHtml(element, html);
 
     var style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } .topo { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .topo { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
+    style.innerHTML = 'svg { overflow: hidden;  /* Do not let IE draw outside the bounds of the svg element. */ } #display { cursor: default; } #scale-label { position: absolute; bottom: 0} #map, #animation, #overlay, #foreground { position: absolute; top: 0; left: 0; will-change: transform; } .topo { stroke: #ffffff; stroke-width: 1.25; fill: none; } .firefox .topo { stroke-width: 1.0; } .graticule { stroke: #505050; stroke-width: 1.0; fill: none; } .hemisphere { stroke: #707070; stroke-width: 1.25; fill: none; } .background-sphere { stroke: none; fill: #303030; } .foreground-sphere { stroke: #000005; stroke-width: 4.0; fill: none; -moz-user-select: none;  /* Oddly, Win FF sometimes selects this SVG element. Disable. */ user-select: none; } .location-mark { stroke: #3aff3a; stroke-width: 2.5; fill: none; }'
     element.appendChild(style);
 
     element.style.backgroundColor = 'black'; 
@@ -733,7 +733,7 @@ module.exports['map'] = function(element) {
                 var value = µ.spread(pct, bounds[0], bounds[1]);
                 var elementId = grid.type === "wind" ? "#location-wind-units" : "#location-value-units";
                 var units = createUnitToggle(elementId, grid).value();
-                colorBar.attr("title", µ.formatScalar(value, units) + " " + units.label);
+                colorBar.attr("title", µ.formatScalar(value, units));
             });
         }
     }
@@ -935,8 +935,9 @@ module.exports['map'] = function(element) {
         // Adjust size of the scale canvas to fill the width of the menu to the right of the label.
         var label = d3.select("#scale-label").node();
         d3.select("#scale")
-            .attr("width", (d3.select("#menu").node().offsetWidth - label.offsetWidth) * 0.97)
-            .attr("height", label.offsetHeight / 2);
+            //.attr("width", (d3.select("#menu").node().offsetWidth - label.offsetWidth) * 0.97)
+            .attr("width", view.width)
+            .attr("height", view.height * 0.03);
 
         d3.select("#show-menu").on("click", function() {
             if (µ.isEmbeddedInIFrame()) {

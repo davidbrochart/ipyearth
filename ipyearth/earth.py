@@ -1,5 +1,5 @@
 from ipywidgets import register, DOMWidget, Layout
-from traitlets import Unicode, default
+from traitlets import Unicode, Float, default
 import json
 import copy
 from .simplify import simplify
@@ -19,10 +19,15 @@ class Earth(DOMWidget):
     projection = Unicode('orthographic').tag(sync=True)
     topology = Unicode('').tag(sync=True)
     vector_field = Unicode('').tag(sync=True)
+    vector_show = Unicode('').tag(sync=True)
+    scalar_field = Unicode('').tag(sync=True)
     overlay = Unicode('').tag(sync=True)
-
-    def set_projection(self, projection):
-        self.projection = projection
+    param = Unicode('').tag(sync=True)
+    color_map = Unicode('').tag(sync=True)
+    color_vmin = Float(0).tag(sync=True)
+    color_vmax = Float(0).tag(sync=True)
+    particleVelocityScale = Float(0).tag(sync=True)
+    particleMaxIntensity = Float(0).tag(sync=True)
 
     def show_topology(self, file_name=None, object_name=None):
         if file_name is not None:
@@ -41,7 +46,7 @@ class Earth(DOMWidget):
                     xy['x'] = xy['x'] + xy_prev['x']
                     xy['y'] = xy['y'] + xy_prev['y']
                     xy_prev = xy
-            pointsLo = simplify(pointsHi, tolerance=5, highestQuality=False)
+            pointsLo = simplify(pointsHi, tolerance=10, highestQuality=True)
             if quantized:
                 xy_prev = {'x': 0, 'y': 0}
                 for xy in pointsLo:
@@ -68,13 +73,20 @@ class Earth(DOMWidget):
             offset_values(arcs, arc_len)
         self.topology = json.dumps(topo_dict)
 
-    def show_wind(self, vector_field):
-        self.overlay = 'wind'
-        self.vector_field = vector_field
+    def _dont_show(self):
+        self.param = 'off'
+        self.overlay = 'off'
 
-    def show_ocean(self, vector_field):
-        self.overlay = 'ocean'
-        self.vector_field = vector_field
-
-    def show_overlay(self, overlay):
-        self.overlay = overlay
+    def show(self, vector=None, scalar=None):
+        self._dont_show()
+        if vector is not None:
+            self.vector_field = vector
+            self.vector_show = 'true'
+            self.param = 'wind'
+            self.overlay = 'wind'
+        if scalar is not None:
+            if vector is None:
+                self.vector_show = 'false'
+            self.scalar_field = scalar
+            self.param = 'wind'
+            self.overlay = 'temp'
