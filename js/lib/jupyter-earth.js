@@ -108,11 +108,21 @@ var EarthView = widgets.DOMWidgetView.extend({
 
     render_earth: function () {
         this.create_obj();
+        this.earth_events();
         return this;
     },
 
     create_obj: function () {
         this.obj = E.map(this.el);
+    },
+
+    earth_events: function () {
+        var that = this;
+        this.obj.configuration.on('change:coord', function () {
+            var c = that.obj.configuration;
+            that.model.set('_coord', c.get("coord"));
+            that.touch();
+        });
     }
 
 });

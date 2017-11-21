@@ -840,6 +840,7 @@ module.exports['map'] = function(element) {
     function showLocationDetails(point, coord) {
         point = point || [];
         coord = coord || [];
+        configuration.save({"coord": coord});
         var grids = gridAgent.value(), field = fieldAgent.value(), λ = coord[0], φ = coord[1];
         if (!field || !field.isInsideBoundary(point[0], point[1])) {
             return;

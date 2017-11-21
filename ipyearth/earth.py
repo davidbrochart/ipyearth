@@ -1,5 +1,5 @@
 from ipywidgets import register, DOMWidget, Layout
-from traitlets import Unicode, Float, default
+from traitlets import Unicode, Float, List, default
 import json
 import copy
 from .simplify import simplify
@@ -28,6 +28,12 @@ class Earth(DOMWidget):
     color_vmax = Float(0).tag(sync=True)
     particleVelocityScale = Float(0).tag(sync=True)
     particleMaxIntensity = Float(0).tag(sync=True)
+
+    _coord = List([]).tag(sync=True)
+
+    @property
+    def coord(self):
+        return self._coord
 
     def show_topology(self, file_name=None, object_name=None):
         if file_name is not None:

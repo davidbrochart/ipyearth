@@ -532,6 +532,7 @@
                 surface: tokens[7],          // non-empty alphanumeric _
                 level: tokens[8],            // non-empty alphanumeric _
                 projection: "orthographic",
+                coord: [],
                 orientation: "",
                 //topology: TOPOLOGY,
                 topology: {"type":"Topology","transform":{"scale":[0.036003600360036005,0.016927109488408615],"translate":[-180,-85.60903777459774]},"objects":{"topoHi":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}, "topoLo":{"type":"GeometryCollection","geometries":[{"type":"LineString","arcs":[0]}]}},"arcs":[[[0,0]]]},
