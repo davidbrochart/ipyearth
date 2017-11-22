@@ -152,10 +152,12 @@ setup_args = {
     'author': 'David Brochart',
     'author_email': 'david.brochart@gmail.com',
     'url': 'https://github.com/davidbrochart/ipyearth',
+    'download_url': 'https://github.com/davidbrochart/ipyearth/archive/0.1.tar.gz',
     'keywords': [
         'ipython',
         'jupyter',
         'widgets',
+        'earth',
     ],
     'classifiers': [
         'Development Status :: 4 - Beta',
