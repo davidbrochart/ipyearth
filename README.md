@@ -6,7 +6,7 @@ An IPython Widget for Earth Maps
 Installation
 ------------
 
-To install use pip:
+To install use pip (not yet available):
 
     $ pip install ipyearth
     $ jupyter nbextension enable --py --sys-prefix ipyearth
