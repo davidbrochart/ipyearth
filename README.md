@@ -3,6 +3,8 @@ ipyearth
 
 An IPython Widget for Earth Maps
 
+![alt text](examples/example.png)
+
 Installation
 ------------
 
