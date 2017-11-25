@@ -40,10 +40,10 @@ var EarthView = widgets.DOMWidgetView.extend({
         this.el.style['height'] = this.model.get('height');
         this.model.on('change:projection', this.projection_changed, this);
         this.model.on('change:topology', this.topology_changed, this);
-        this.model.on('change:vector_field', this.vector_field_changed, this);
+        this.model.on('change:animate', this.animate_changed, this);
         this.model.on('change:vector_show', this.vector_show_changed, this);
-        this.model.on('change:scalar_field', this.scalar_field_changed, this);
         this.model.on('change:overlay', this.overlay_changed, this);
+        this.model.on('change:overlayType', this.overlayType_changed, this);
         this.model.on('change:param', this.param_changed, this);
         this.model.on('change:color_map', this.color_map_changed, this);
         this.model.on('change:color_vmin', this.color_vmin_changed, this);
@@ -61,24 +61,20 @@ var EarthView = widgets.DOMWidgetView.extend({
         this.obj.configuration.save({topology: JSON.parse(this.model.get('topology'))});
     },
 
-    vector_field_changed: function() {
-        var vector_field = this.model.get('vector_field');
-        this.obj.configuration.save({vector_data: JSON.parse(vector_field)});
+    animate_changed: function() {
+        this.obj.configuration.save({vector_data: JSON.parse(this.model.get('animate'))});
     },
 
     vector_show_changed: function() {
-        var vector_show = this.model.get('vector_show');
-        this.obj.configuration.save({vector_show: JSON.parse(vector_show)});
-    },
-
-    scalar_field_changed: function() {
-        var scalar_field = this.model.get('scalar_field');
-        this.obj.configuration.save({scalar_data: JSON.parse(scalar_field)});
+        this.obj.configuration.save({vector_show: JSON.parse(this.model.get('vector_show'))});
     },
 
     overlay_changed: function() {
-        var overlay = this.model.get('overlay');
-        this.obj.configuration.save({overlayType: overlay});
+        this.obj.configuration.save({scalar_data: JSON.parse(this.model.get('overlay'))});
+    },
+
+    overlayType_changed: function() {
+        this.obj.configuration.save({overlayType: this.model.get('overlayType')});
     },
 
     param_changed: function() {

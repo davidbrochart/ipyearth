@@ -18,10 +18,10 @@ class Earth(DOMWidget):
     _model_module_version = Unicode('^0.1.0').tag(sync=True)
     projection = Unicode('orthographic').tag(sync=True)
     topology = Unicode('').tag(sync=True)
-    vector_field = Unicode('').tag(sync=True)
+    animate = Unicode('').tag(sync=True)
     vector_show = Unicode('').tag(sync=True)
-    scalar_field = Unicode('').tag(sync=True)
     overlay = Unicode('').tag(sync=True)
+    overlayType = Unicode('').tag(sync=True)
     param = Unicode('').tag(sync=True)
     color_map = Unicode('').tag(sync=True)
     color_vmin = Float(0).tag(sync=True)
@@ -33,7 +33,7 @@ class Earth(DOMWidget):
 
     @property
     def coord(self):
-        return self._coord
+        return self._coord[::-1]
 
     def show_topology(self, file_name=None, object_name=None):
         if file_name is not None:
@@ -79,20 +79,41 @@ class Earth(DOMWidget):
             offset_values(arcs, arc_len)
         self.topology = json.dumps(topo_dict)
 
-    def _dont_show(self):
+    def show(self, animate=None, overlay=None):
         self.param = 'off'
-        self.overlay = 'off'
-
-    def show(self, vector=None, scalar=None):
-        self._dont_show()
-        if vector is not None:
-            self.vector_field = vector
+        self.overlayType = 'off'
+        if animate is None:
+            self.vector_show = 'false'
+        else:
+            u = [val if val * 0 == 0 else 'null' for val in animate['u'].flatten().tolist()]
+            v = [val if val * 0 == 0 else 'null' for val in animate['v'].flatten().tolist()]
+            dx = animate['dx']
+            dy = animate['dy']
+            nx = animate['nx']
+            ny = animate['ny']
+            la1 = animate['ullat']
+            lo1 = animate['ullon']
+            la2 = int(la1 - (ny - 1) * dy)
+            lo2 = int(lo1 + (nx - 1) * dx)
+            self.animate = json.dumps([{'header': {'nx': nx, 'ny': ny, 'lo1': lo1, 'la1': la1, 'lo2': lo2, 'la2': la2, 'dx': dx, 'dy': dy}, 'data': u}, {'header': {'nx': nx, 'ny': ny, 'lo1': lo1, 'la1': la1, 'lo2': lo2, 'la2': la2, 'dx': dx, 'dy': dy}, 'data': v}])
             self.vector_show = 'true'
             self.param = 'wind'
-            self.overlay = 'wind'
-        if scalar is not None:
-            if vector is None:
-                self.vector_show = 'false'
-            self.scalar_field = scalar
+            self.overlayType = 'wind'
+        if overlay == 'fromAnim':
             self.param = 'wind'
-            self.overlay = 'temp'
+            self.overlayType = 'wind'
+        elif overlay is not None:
+            data = [val if val * 0 == 0 else 'null' for val in overlay['data'].flatten().tolist()]
+            dx = overlay['dx']
+            dy = overlay['dy']
+            nx = overlay['nx']
+            ny = overlay['ny']
+            la1 = overlay['ullat']
+            lo1 = overlay['ullon']
+            la2 = int(la1 - (ny - 1) * dy)
+            lo2 = int(lo1 + (nx - 1) * dx)
+            self.overlay = json.dumps([{'header': {'nx': nx, 'ny': ny, 'lo1': lo1, 'la1': la1, 'lo2': lo2, 'la2': la2, 'dx': dx, 'dy': dy}, 'data': data}])
+            self.param = 'wind'
+            self.overlayType = 'temp'
+        else:
+            self.overlayType = 'off'
