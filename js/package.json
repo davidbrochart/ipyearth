@@ -23,6 +23,9 @@
     "prepublish": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "jupyterlab": {
+    "extension": "lib/labplugin"
+  },
   "devDependencies": {
     "webpack": "^3.5.5",
     "rimraf": "^2.6.1"

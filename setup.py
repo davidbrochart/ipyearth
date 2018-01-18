@@ -136,6 +136,7 @@ setup_args = {
             'ipyearth/static/index.js',
             'ipyearth/static/index.js.map',
         ]),
+        ('etc/jupyter/nbconfig/notebook.d/' , ['ipyearth.json'])
     ],
     'install_requires': [
         'ipywidgets>=7.0.0',
