@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 from setuptools import setup, find_packages, Command
 from setuptools.command.sdist import sdist
 from setuptools.command.build_py import build_py
 from setuptools.command.egg_info import egg_info
 from subprocess import check_call
+from glob import glob
 import os
 import sys
 import platform
@@ -22,7 +25,7 @@ log.set_verbosity(log.DEBUG)
 log.info('setup.py entered')
 log.info('$PATH=%s' % os.environ['PATH'])
 
-LONG_DESCRIPTION = 'An IPython Widget for Earth Maps'
+LONG_DESCRIPTION = 'A Jupyter widget for dynamic Earth maps'
 
 def js_prerelease(command, strict=False):
     """decorator for building minified js/css prior to another command"""
@@ -76,17 +79,9 @@ class NPM(Command):
     def finalize_options(self):
         pass
 
-    def get_npm_name(self):
-        npmName = 'npm';
-        if platform.system() == 'Windows':
-            npmName = 'npm.cmd';
-            
-        return npmName;
-    
     def has_npm(self):
-        npmName = self.get_npm_name();
         try:
-            check_call([npmName, '--version'])
+            check_call(['npm', '--version'])
             return True
         except:
             return False
@@ -106,15 +101,14 @@ class NPM(Command):
 
         if self.should_run_npm_install():
             log.info("Installing build dependencies with npm.  This may take a while...")
-            npmName = self.get_npm_name();
-            check_call([npmName, 'install'], cwd=node_root, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['npm', 'install'], cwd=node_root, stdout=sys.stdout, stderr=sys.stderr)
             os.utime(self.node_modules, None)
 
         for t in self.targets:
             if not os.path.exists(t):
                 msg = 'Missing file: %s' % t
                 if not has_npm:
-                    msg += '\nnpm is required to build a development version of a widget extension'
+                    msg += '\nnpm is required to build a development version of widgetsnbextension'
                 raise ValueError(msg)
 
         # update package data in case this created new files
@@ -127,20 +121,19 @@ with open(os.path.join(here, 'ipyearth', '_version.py')) as f:
 setup_args = {
     'name': 'ipyearth',
     'version': version_ns['__version__'],
-    'description': 'An IPython Widget for Earth Maps',
+    'description': 'A Jupyter widget for dynamic Earth maps',
     'long_description': LONG_DESCRIPTION,
+    'license': 'MIT License',
     'include_package_data': True,
     'data_files': [
-        ('share/jupyter/nbextensions/ipyearth', [
+        ('share/jupyter/nbextensions/jupyter-earth', [
             'ipyearth/static/extension.js',
             'ipyearth/static/index.js',
-            'ipyearth/static/index.js.map',
-        ]),
-        ('etc/jupyter/nbconfig/notebook.d/' , ['ipyearth.json'])
+            'ipyearth/static/index.js.map'
+        ] + glob('ipyearth/static/*.png') + glob('ipyearth/static/*.svg')),
+        ('etc/jupyter/nbconfig/notebook.d' , ['jupyter-leaflet.json'])
     ],
-    'install_requires': [
-        'ipywidgets>=7.0.0',
-    ],
+    'install_requires': ['ipywidgets>=7.0.0,<8'],
     'packages': find_packages(),
     'zip_safe': False,
     'cmdclass': {
@@ -149,23 +142,16 @@ setup_args = {
         'sdist': js_prerelease(sdist, strict=True),
         'jsdeps': NPM,
     },
-
     'author': 'David Brochart',
     'author_email': 'david.brochart@gmail.com',
     'url': 'https://github.com/davidbrochart/ipyearth',
-    'download_url': 'https://github.com/davidbrochart/ipyearth/archive/0.1.tar.gz',
-    'keywords': [
-        'ipython',
-        'jupyter',
-        'widgets',
-        'earth',
-    ],
+    'keywords': ['ipython', 'jupyter', 'widgets', 'graphics', 'GIS'],
     'classifiers': [
         'Development Status :: 4 - Beta',
-        'Framework :: IPython',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'Topic :: Multimedia :: Graphics',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
