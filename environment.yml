@@ -5,3 +5,5 @@ dependencies:
   - numpy
   - matplotlib
   - ipywidgets
+  - pip:
+    - ipyearth
